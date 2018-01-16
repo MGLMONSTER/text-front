@@ -1,5 +1,5 @@
 <template>
-    <ui-page :title="title || page.title" ref="page">
+    <ui-page :title="title || page.title" :page="page" ref="page">
         <div slot="drawer">
             <ui-appbar title=""></ui-appbar>
             <ui-list @itemClick="toggle()">
@@ -28,8 +28,6 @@
     export default {
         data() {
             return {
-                open: false,
-                docked: true
             }
         },
         props: {
@@ -45,7 +43,14 @@
                 type: Object,
                 default: function () {
                     return {
-                        title: '云设'
+                        menu: [
+                            {
+                                type: 'text',
+                                text: '更多工具',
+                                href: 'http://tool.yunser.com/',
+                                target: '_blank'
+                            }
+                        ]
                     }
                 }
             },
@@ -55,6 +60,9 @@
             }
         },
         methods: {
+            moreTool() {
+                alert(1)
+            },
             toggle() {
                 console.log(this.$refs.page)
             }

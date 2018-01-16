@@ -32,6 +32,10 @@
         },
         methods: {
             init() {
+                console.log(this._toFull('123') === '１２３')
+                console.log(this._toHalf('１２３') === '123')
+                console.log(this._toFull('123１２３') === '１２３１２３')
+                console.log(this._toHalf('123１２３') === '123123')
             },
             toHalf: function () {
                 if (!this.text) {

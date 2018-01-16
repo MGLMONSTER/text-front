@@ -8,13 +8,9 @@
     export default {
         data () {
             return {
-                version: ''
             }
         },
         mounted() {
         }
     }
 </script>
-
-<style scoped>
-</style>
