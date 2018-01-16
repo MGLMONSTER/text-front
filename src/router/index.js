@@ -4,6 +4,7 @@ import Router from 'vue-router'
 const Home = resolve => require(['@/views/Home'], resolve)
 const About = resolve => require(['@/views/About'], resolve)
 const Chinese = resolve => require(['@/views/Chinese'], resolve)
+const Letter = resolve => require(['@/views/Letter'], resolve)
 
 const Error404 = resolve => require(['@/views/error/Error404'], resolve)
 
@@ -23,12 +24,16 @@ let routes = [
         component: Chinese
     },
     {
+        path: '/letter',
+        component: Letter
+    },
+    {
         path: '*',
         component: Error404
     }
 ]
 
-let router = new Router({
+export default new Router({
     mode: 'history',
     routes: routes,
     scrollBehavior (to, from, savedPosition) {
@@ -38,5 +43,3 @@ let router = new Router({
         }
     }
 })
-
-export default router
