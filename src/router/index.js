@@ -5,6 +5,7 @@ const Home = resolve => require(['@/views/Home'], resolve)
 const About = resolve => require(['@/views/About'], resolve)
 const Chinese = resolve => require(['@/views/Chinese'], resolve)
 const Letter = resolve => require(['@/views/Letter'], resolve)
+const FullAndHalf = resolve => require(['@/views/FullAndHalf'], resolve)
 
 const Error404 = resolve => require(['@/views/error/Error404'], resolve)
 
@@ -26,6 +27,10 @@ let routes = [
     {
         path: '/letter',
         component: Letter
+    },
+    {
+        path: '/fullAndHalf',
+        component: FullAndHalf
     },
     {
         path: '*',
