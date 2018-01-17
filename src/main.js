@@ -8,6 +8,7 @@ import ui from './components/index'
 // 全部加载
 import YunserUI from 'yunser-ui-vue'
 import 'yunser-ui-vue/dist/yunser-ui.css'
+import './scss/main.scss'
 Vue.use(YunserUI)
 
 Vue.config.productionTip = false

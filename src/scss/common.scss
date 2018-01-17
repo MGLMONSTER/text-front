@@ -1,6 +1,26 @@
-.ui-page-header {
-    z-index: 100;
+.ui-page-common .ui-page-header {
+    z-index: 10000;
 }
 .ui-page-container {
     padding: 0;
+}
+
+.w-e-text {
+    h1 {
+        font-size: 20px;
+    }
+}
+
+.capture {
+    display: inline-block;
+    padding: 16px;
+    border: 1px solid #ccc;
+    //background-image: url("/static/img/logo.png");
+    /*background-color: #f00;*/
+    h2 {
+        font-size: 20px;
+    }
+    p {
+        //color: #f00;
+    }
 }

@@ -6,6 +6,9 @@
                 <ui-list-item title="首页" to="/">
                     <ui-icon slot="left" value="grade"/>
                 </ui-list-item>
+                <ui-list-item title="富文本编辑器" to="/rich">
+                    <ui-icon slot="left" value="grade"/>
+                </ui-list-item>
                 <ui-list-item title="繁体字工具" to="/chinese">
                     <ui-icon slot="left" value="grade"/>
                 </ui-list-item>
