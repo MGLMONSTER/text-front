@@ -72,6 +72,24 @@
                 </my-container>
             </div>
         </div>
+        <div class="my-virtual-page" v-if="feedbackVisible">
+            <ui-appbar title="反馈">
+                <ui-icon-button icon="close" slot="left" @click="feedbackVisible = false"/>
+            </ui-appbar>
+            <div class="page-content">
+                <my-container class="preview-box-container" :maxWidth="1200">
+                    <ui-text-field hintText="反馈内容"/>
+                    <h2 class="capture-label">页面截图：</h2>
+                    <div>
+                        <img class="page-capture" :src="pageCapture">
+                    </div>
+                    <ui-raised-button label="提交"
+                                      href="https://www.cnblogs.com/yunser/p/use-html2canvas-and-wangeditor-make-a-tool.html" target="_blank"
+                                      @click="feedbackSubmit" primary/>
+                </my-container>
+            </div>
+        </div>
+        <ui-float-button icon="photo_camera" class="my-float-button" title="意见反馈" @click="feedback"/>
     </my-page>
 </template>
 
@@ -104,7 +122,10 @@
                     background: "url('/static/img/bg-1.jpg')",
                     backgroundColor: '#fff',
                     fontSize: 14
-                }
+                },
+                // 反馈
+                feedbackVisible: false,
+                pageCapture: ''
             }
         },
         computed: {
@@ -125,22 +146,31 @@
             }
         },
         mounted() {
-            this.make()
+//            this.make()
+//            this.feedback()
         },
         methods: {
             make: function () {
-                let _this = this
                 this.previewVisible = true
                 setTimeout(() => {
                     html2canvas(document.querySelector('#capture')).then(canvas => {
                         let img = canvas.toDataURL('image/png')
-                        _this.result = img
+                        this.result = img
                     })
                 }, 0)
             },
             download() {
                 this.resultVisible = true
                 this.make()
+            },
+            feedback() {
+                html2canvas(document.querySelector('#page')).then(canvas => {
+                    let img = canvas.toDataURL('image/png')
+                    this.pageCapture = img
+                    this.feedbackVisible = true
+                })
+            },
+            feedbackSubmit() {
             }
         }
     }
@@ -148,7 +178,18 @@
 
 <style lang="scss" scoped>
     @import "../scss/var";
-
+    .my-float-button {
+        position: fixed;
+        right: 16px;
+        bottom: 24px;
+    }
+    .page-capture {
+        max-width: 600px;
+        border: 1px solid #eee;
+    }
+    .capture-label {
+        margin-bottom: 16px;
+    }
     .my-section-title {
         font-size: 20px;
         margin-bottom: 16px;
