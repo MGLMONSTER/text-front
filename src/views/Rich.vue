@@ -24,6 +24,7 @@
                             <ui-text-field v-model.number="style.height" />
                         </my-form-item>
                         <my-form-item label="顶部旁白">
+                            <!--<ui-slider v-model.number="style.paddingTop" fullWidth/>-->
                             <ui-text-field v-model.number="style.paddingTop" />
                         </my-form-item>
                         <my-form-item label="左侧旁白">
@@ -89,7 +90,7 @@
                 </my-container>
             </div>
         </div>
-        <ui-float-button icon="photo_camera" class="my-float-button" title="意见反馈" @click="feedback"/>
+        <ui-float-button icon="feedback" class="my-float-button" title="意见反馈" @click="feedback"/>
     </my-page>
 </template>
 
@@ -146,7 +147,7 @@
             }
         },
         mounted() {
-//            this.make()
+            this.make()
 //            this.feedback()
         },
         methods: {

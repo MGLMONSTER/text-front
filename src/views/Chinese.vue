@@ -1,5 +1,5 @@
 <template>
-    <my-page title="繁体字工具">
+    <my-page title="繁体字工具" :page="page">
         <section class="input-box">
             <div class="tip"><h1></h1></div>
             <ui-text-field v-model="text" hintText="输入要转换的内容" multiLine :rows="4" :rowsMax="10"/>
@@ -17,10 +17,6 @@
 
             <ui-text-field v-model="result" hintText="" multiLine :rows="4" :rowsMax="10" v-if="result"/>
         </section>
-        <ui-article class="article">
-            <h2>工具说明</h2>
-            <p>在聊天或者阅读某些文字时，有时会遇到一大段的繁体字，阅读起来比较吃力。这个工具可以帮到你。</p>
-        </ui-article>
     </my-page>
 </template>
 
@@ -32,7 +28,16 @@
             return {
                 text: '', // 憂鬱的烏龜
                 result: '',
-                language: ''
+                language: '',
+                page: {
+                    menu: [
+                        {
+                            type: 'icon',
+                            icon: 'help',
+                            to: '/chinese/help'
+                        }
+                    ]
+                }
             }
         },
         mounted() {
@@ -75,7 +80,7 @@
     .btns {
         margin-bottom: 16px;
         .btn {
-            margin-right: 16px;
+            margin-right: 8px;
         }
     }
 </style>

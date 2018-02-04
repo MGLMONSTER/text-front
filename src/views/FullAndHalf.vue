@@ -1,21 +1,17 @@
 <template>
-    <my-page title="全角半角转换">
+    <my-page title="全角半角转换" :page="page">
         <section class="input-box">
             <div class="form-item">
                 <ui-text-field v-model="text" hintText="输入要转换的内容" multiLine :rows="1" :rowsMax="4"/>
             </div>
             <div class="btns">
-                <ui-raised-button class="btn" label="转换成半角" @click="toHalf"/>
                 <ui-raised-button class="btn" label="转换成全角" @click="toFull"/>
+                <ui-raised-button class="btn" label="转换成半角" @click="toHalf"/>
                 <ui-raised-button class="btn" label="清空内容" @click="clear"/>
             </div>
 
             <ui-text-field v-model="result" hintText="" multiLine :rows="4" :rowsMax="10" v-if="result"/>
         </section>
-        <ui-article class="article">
-            <h2>工具介绍</h2>
-            <p>本工具主要用于全角字符和半角字符的转换，比如一些论坛无法发链接可以把链接转成全角就可以发。</p>
-        </ui-article>
     </my-page>
 </template>
 
@@ -24,7 +20,16 @@
         data () {
             return {
                 text: '',
-                result: ''
+                result: '',
+                page: {
+                    menu: [
+                        {
+                            type: 'icon',
+                            icon: 'help',
+                            to: '/fullAndHalf/help'
+                        }
+                    ]
+                }
             }
         },
         mounted() {

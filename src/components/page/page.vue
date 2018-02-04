@@ -1,5 +1,5 @@
 <template>
-    <ui-page id="page" :title="title || page.title" :page="page" ref="page">
+    <ui-page id="page" :title="title" :page="page" :backable="backable" ref="page">
         <div slot="drawer">
             <ui-appbar title=""></ui-appbar>
             <ui-list @itemClick="toggle()">
@@ -18,7 +18,10 @@
                 <ui-list-item title="全角半角转换" to="/fullAndHalf">
                     <ui-icon slot="left" value="grade"/>
                 </ui-list-item>
-                <ui-list-item title="关于" to="/about">
+                <ui-list-item title="拆字" to="/split">
+                    <ui-icon slot="left" value="grade"/>
+                </ui-list-item>
+                <ui-list-item title="关于" href="http://about.yunser.com/" target="_blank">
                     <ui-icon slot="left" value="grade"/>
                 </ui-list-item>
             </ui-list>
@@ -46,14 +49,14 @@
                 type: Object,
                 default: function () {
                     return {
-                        menu: [
-                            {
-                                type: 'text',
-                                text: '更多工具',
-                                href: 'http://tool.yunser.com/',
-                                target: '_blank'
-                            }
-                        ]
+//                        menu: [
+//                            {
+//                                type: 'text',
+//                                text: '更多工具',
+//                                href: 'http://tool.yunser.com/',
+//                                target: '_blank'
+//                            }
+//                        ]
                     }
                 }
             },
