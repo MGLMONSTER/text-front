@@ -68,6 +68,7 @@
                     regExp: false
                 })
 
+                console.log(editor)
                 this.initWebIntents()
 
 //                $('#new').on('click', function () {

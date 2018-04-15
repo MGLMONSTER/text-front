@@ -4,6 +4,7 @@ import Router from 'vue-router'
 const Home = resolve => require(['@/views/Home'], resolve)
 const Editor = resolve => require(['@/views/Home'], resolve)
 const Rich = resolve => require(['@/views/Rich'], resolve)
+const Tool = resolve => require(['@/views/Tool'], resolve)
 const About = resolve => require(['@/views/About'], resolve)
 const Chinese = resolve => require(['@/views/Chinese'], resolve)
 const ChineseHelp = resolve => require(['@/views/ChineseHelp'], resolve)
@@ -29,6 +30,10 @@ let routes = [
     {
         path: '/rich',
         component: Rich
+    },
+    {
+        path: '/tool',
+        component: Tool
     },
     {
         path: '/about',
