@@ -3,7 +3,7 @@
         <div slot="drawer">
             <ui-appbar title=""></ui-appbar>
             <ui-list @itemClick="toggle()">
-                <ui-list-item title="首页" to="/">
+                <ui-list-item title="文本编辑器" to="/">
                     <ui-icon slot="left" value="grade"/>
                 </ui-list-item>
                 <ui-list-item title="富文本编辑器" to="/rich">

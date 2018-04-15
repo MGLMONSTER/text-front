@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 const Home = resolve => require(['@/views/Home'], resolve)
+const Editor = resolve => require(['@/views/Home'], resolve)
 const Rich = resolve => require(['@/views/Rich'], resolve)
 const About = resolve => require(['@/views/About'], resolve)
 const Chinese = resolve => require(['@/views/Chinese'], resolve)
@@ -20,6 +21,10 @@ let routes = [
     {
         path: '/',
         component: Home
+    },
+    {
+        path: '/editor',
+        component: Editor
     },
     {
         path: '/rich',

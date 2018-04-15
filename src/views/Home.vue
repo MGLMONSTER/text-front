@@ -1,7 +1,6 @@
 <template>
-    <my-page title="首页">
-        <ui-paper zDepth="1">
-            <!--代码输入框（注意请务必设置高度，否则无法显示）-->
+    <my-page class="page-editor" title="文本编辑器" :page="page">
+        <!--代码输入框（注意请务必设置高度，否则无法显示）-->
             <pre id="code" class="ace_editor" style="height100%; min-height:500px"><textarea class="ace_text-input">
 ## 二级标题
 > 引用
@@ -10,7 +9,6 @@
 ### 三级标题
 **加粗**文字
         </textarea></pre>
-        </ui-paper>
     </my-page>
 </template>
 
@@ -22,6 +20,10 @@
     export default {
         data () {
             return {
+                page: {
+                    menu: [
+                    ]
+                }
             }
         },
         mounted() {
@@ -31,6 +33,7 @@
             init() {
                 // 初始化对象
                 let editor = ace.edit('code')
+                this.editor = editor
 
                 // 设置风格和语言（更多风格和语言，请到github上相应目录查看）
                 let theme = 'clouds'
@@ -64,6 +67,8 @@
                     wholeWord: false,
                     regExp: false
                 })
+
+                this.initWebIntents()
 
 //                $('#new').on('click', function () {
 //                    editor.setValue('')
@@ -100,6 +105,28 @@
 //                    reader.readAsText(file)
 //                    $('#file').click()
 //                })
+            },
+            initWebIntents() {
+                if (!window.intent) {
+                    return
+                }
+                console.log(window.intent.data)
+                let data = window.intent.data
+                this.editor.setValue(data)
+
+                this.page.menu.push({
+                    type: 'icon',
+                    icon: 'check',
+                    click: this.finish,
+                    title: '完成'
+                })
+            },
+            finish() {
+                window.intent.postResult(this.editor.getValue())
+                setTimeout(() => {
+                    let owner = window.opener || window.parent
+                    owner.window.close()
+                }, 100)
             }
         }
     }
