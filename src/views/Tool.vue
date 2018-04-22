@@ -64,11 +64,10 @@
 </template>
 
 <script>
-    /* eslint-disable */
+    /* eslint-disable2 */
     export default {
         data () {
             return {
-//                text: 'Asd aSD. Asd aSD',
                 result: '',
                 text: '',
                 count: {
@@ -101,6 +100,7 @@
                 console.log(window.intent.data)
                 let data = window.intent.data
                 this.text = data
+                this.compute()
                 this.page.menu.push({
                     type: 'icon',
                     icon: 'check',
@@ -115,125 +115,127 @@
                     owner.window.close()
                 }, 100)
             },
-            compute: function () {
-                for (var i = 0; i < this.text.length; i++) {
-
-                }
-                var W=new Object();
-                var Result=new Array();
-                var iNumwords=0;
-                var sNumwords=0;
-                var letter = 0;
-                var p = 1;
-                console.log(p);
-                var sTotal=0;var iTotal=0;var eTotal=0;var otherTotal=0;var bTotal=0;var inum=0;
-                for(i=0;i<this.text.length;i++){
-                    var c=this.text.charAt(i);
-                    if(c.match(/[\u4e00-\u9fa5]/)){
-                        if(isNaN(W[c])){
-                            iNumwords++;
-                            W[c]=1;
-                        }
-                    iTotal++;
-                    }
-                }
-                var word = 0;
-                var isWord = false;
-                for (var i = 0; i < this.text.length; i++) {
-                    var c = this.text.charAt(i);
-                    if (c.match(/[^\x00-\xff]/)) {
+            compute() {
+                var W = {}
+                var letter = 0
+                var p = 1
+                console.log(p)
+                var sTotal = 0
+                var iTotal = 0
+                var eTotal = 0
+                var inum = 0
+                for (let i = 0; i < this.text.length; i++) {
+                    var c = this.text.charAt(i)
+                    if (c.match(/[\u4e00-\u9fa5]/)) {
                         if (isNaN(W[c])) {
-                            sNumwords++;
+                            W[c] = 1
                         }
-                        sTotal++;
-                    } else {
-                        eTotal++;
+                        iTotal++
                     }
-                    
+                }
+                var word = 0
+                var isWord = false
+                for (var i = 0; i < this.text.length; i++) {
+                    let c = this.text.charAt(i)
+                    if (c.match(/[^\x00-\xff]/)) {
+                        sTotal++
+                    } else {
+                        eTotal++
+                    }
                     // 英文字符与单词
                     if (c.match(/[a-zA-Z]/)) {
-                        letter++;
+                        letter++
                         if (i === 0) {
-                            isWord = true;
+                            isWord = true
                         } else {
-                            isWord = true;
+                            isWord = true
                         }
                     } else {
                         if (isWord) {
-                            word++;
+                            word++
                         }
                         isWord = false
                     }
 
                     if (c === '\n') {
                         console.log(1)
-                        p++;
+                        p++
                     }
-                    if(c.match(/[0-9]/)){
-                        inum++;
+                    if (c.match(/[0-9]/)) {
+                        inum++
                     }
                 }
-                this.count.char = sTotal;
-                this.count.letter = letter;
-                this.count.number = inum;
-                this.count.totalChar = iTotal*2+(sTotal-iTotal)*2+eTotal;
-                this.count.chinese = iTotal;
-                this.count.total = inum + iTotal;
-                this.count.word = word;
-                this.count.p = p;
+                this.count = {
+                    char: sTotal,
+                    letter: letter,
+                    number: inum,
+                    totalChar: iTotal * 2 + (sTotal - iTotal) * 2 + eTotal,
+                    chinese: iTotal,
+                    total: inum + iTotal,
+                    word: word,
+                    p: p
+                }
+                // this.count.char = sTotal
+                // this.count.letter = letter
+                // this.count.number = inum
+                // this.count.totalChar = iTotal * 2 + (sTotal - iTotal) * 2 + eTotal
+                // this.count.chinese = iTotal
+                // this.count.total = inum + iTotal
+                // this.count.word = word
+                // this.count.p = p
             },
-            simple: function () {
-                var newArr = [];
-                var arr = this.text.split('\n');
-                var map = {};
+            simple() {
+                var newArr = []
+                var arr = this.text.split('\n')
+                var map = {}
                 for (var i = 0; i < arr.length; i++) {
-                    console.log(arr[i]);
+                    console.log(arr[i])
                     if (!map[arr[i]]) {
-                        map[arr[i]] = 1;
-                        newArr.push(arr[i]);
+                        map[arr[i]] = 1
+                        newArr.push(arr[i])
                     }
                 }
 
-                this.text = newArr.join('\n');
+                this.text = newArr.join('\n')
             },
             blank: function () {
-                var newArr = [];
-                var arr = this.text.split('\n');
+                var newArr = []
+                var arr = this.text.split('\n')
                 for (var i = 0; i < arr.length; i++) {
                     if (arr[i].length) {
-                        newArr.push(arr[i]);
+                        newArr.push(arr[i])
                     }
                 }
 
-                this.text = newArr.join('\n');
+                this.text = newArr.join('\n')
             },
             blank2: function () {
-                var newArr = [];
-                var arr = this.text.split('\n');
-                var lastEmpty = false;
+                var newArr = []
+                var arr = this.text.split('\n')
+                var lastEmpty = false
                 for (var i = 0; i < arr.length; i++) {
                     if (arr[i].length) {
-                        newArr.push(arr[i]);
-                        lastEmpty = false;
+                        newArr.push(arr[i])
+                        lastEmpty = false
                     } else {
                         if (!lastEmpty) {
-                            newArr.push('');
+                            newArr.push('')
                         }
-                        lastEmpty = true;
+                        lastEmpty = true
                     }
                 }
 
-                this.text = newArr.join('\n');
+                this.text = newArr.join('\n')
             },
             sort: function () {
-                var newArr = [];
-                var arr = this.text.split('\n');
-                newArr = arr.sort();
-                this.text = newArr.join('\n');
+                var newArr = []
+                var arr = this.text.split('\n')
+                newArr = arr.sort()
+                this.text = newArr.join('\n')
             },
             clear: function () {
-                this.text = '';
-                this.compute();
+                this.text = ''
+                this.compute()
             }
         }
     }

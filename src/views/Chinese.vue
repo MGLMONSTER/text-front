@@ -52,14 +52,42 @@
             }
         },
         mounted() {
+            this.init()
         },
         methods: {
+            init() {
+                this.initWebIntents()
+            },
+            initWebIntents() {
+                if (!window.intent) {
+                    return
+                }
+                console.log(window.intent.data)
+                let data = window.intent.data
+                this.text = data
+            },
+            finish() {
+                window.intent.postResult(this.text)
+                setTimeout(() => {
+                    let owner = window.opener || window.parent
+                    owner.window.close()
+                }, 100)
+            },
             simplified: function () {
                 this.result = transverter({
                     type: 'simplified',
                     str: this.text,
                     language: this.language
                 })
+                if (window.intent && !this.isAddMenu) {
+                    this.isAddMenu = true
+                    this.page.menu.push({
+                        type: 'icon',
+                        icon: 'check',
+                        click: this.finish,
+                        title: '完成'
+                    })
+                }
             },
             traditional: function () {
                 this.result = transverter({
@@ -67,6 +95,15 @@
                     str: this.text,
                     language: this.language
                 })
+                if (window.intent && !this.isAddMenu) {
+                    this.isAddMenu = true
+                    this.page.menu.push({
+                        type: 'icon',
+                        icon: 'check',
+                        click: this.finish,
+                        title: '完成'
+                    })
+                }
             },
             clear: function () {
                 this.text = ''
