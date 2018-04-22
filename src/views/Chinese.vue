@@ -67,7 +67,7 @@
                 this.text = data
             },
             finish() {
-                window.intent.postResult(this.text)
+                window.intent.postResult(this.result)
                 setTimeout(() => {
                     let owner = window.opener || window.parent
                     owner.window.close()
