@@ -15,6 +15,7 @@
 <script>
 //    const $ = window.$
     const ace = window.ace
+    const Intent = window.Intent
 //    const saveAs = window.saveAs
 
     export default {
@@ -22,6 +23,12 @@
             return {
                 page: {
                     menu: [
+                        {
+                            type: 'icon',
+                            icon: 'all_inclusive',
+                            click: this.open,
+                            title: '用其他应用打开'
+                        }
                     ]
                 }
             }
@@ -120,6 +127,19 @@
                     icon: 'check',
                     click: this.finish,
                     title: '完成'
+                })
+            },
+            open() {
+                let intent = new Intent({
+                    action: 'http://webintent.yunser.com/?',
+                    type: 'text/plain',
+                    data: this.editor.getValue()
+                })
+                navigator.startActivity(intent, data => {
+                    console.log('成功', typeof data)
+                    this.editor.setValue(data)
+                }, data => {
+                    console.log('失败')
                 })
             },
             finish() {
