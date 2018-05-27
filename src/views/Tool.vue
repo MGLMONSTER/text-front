@@ -6,7 +6,7 @@
 					<div class="tip">请在下框输入您要统计的字符内容:</div>
                     <ui-text-field v-model="text" hintText="" multiLine :rows="4" :rowsMax="4"/>
 					<div class="btns">
-                        <ui-raised-button class="btn" label="统计" @click="compute"/>
+                        <ui-raised-button class="btn" primary label="统计" @click="compute"/>
                         <ui-raised-button class="btn" label="去重" @click="simple"/>
                         <ui-raised-button class="btn" label="删除空行" @click="blank"/>
                         <ui-raised-button class="btn" label="删除多余空行" @click="blank2" title="连续空行只保留一行" />
@@ -116,6 +116,13 @@
                 }, 100)
             },
             compute() {
+                if (!this.text) {
+                    this.$message({
+                        type: 'danger',
+                        text: '请输入内容'
+                    })
+                    return
+                }
                 var W = {}
                 var letter = 0
                 var p = 1
@@ -185,6 +192,13 @@
                 // this.count.p = p
             },
             simple() {
+                if (!this.text) {
+                    this.$message({
+                        type: 'danger',
+                        text: '请输入内容'
+                    })
+                    return
+                }
                 var newArr = []
                 var arr = this.text.split('\n')
                 var map = {}
@@ -198,7 +212,14 @@
 
                 this.text = newArr.join('\n')
             },
-            blank: function () {
+            blank() {
+                if (!this.text) {
+                    this.$message({
+                        type: 'danger',
+                        text: '请输入内容'
+                    })
+                    return
+                }
                 var newArr = []
                 var arr = this.text.split('\n')
                 for (var i = 0; i < arr.length; i++) {
@@ -209,7 +230,14 @@
 
                 this.text = newArr.join('\n')
             },
-            blank2: function () {
+            blank2() {
+                if (!this.text) {
+                    this.$message({
+                        type: 'danger',
+                        text: '请输入内容'
+                    })
+                    return
+                }
                 var newArr = []
                 var arr = this.text.split('\n')
                 var lastEmpty = false
@@ -227,13 +255,27 @@
 
                 this.text = newArr.join('\n')
             },
-            sort: function () {
+            sort() {
+                if (!this.text) {
+                    this.$message({
+                        type: 'danger',
+                        text: '请输入内容'
+                    })
+                    return
+                }
                 var newArr = []
                 var arr = this.text.split('\n')
                 newArr = arr.sort()
                 this.text = newArr.join('\n')
             },
-            clear: function () {
+            clear() {
+                if (!this.text) {
+                    this.$message({
+                        type: 'danger',
+                        text: '请输入内容'
+                    })
+                    return
+                }
                 this.text = ''
                 this.compute()
             }

@@ -6,8 +6,8 @@
                 <ui-text-field v-model="text" hintText="输入要转换的内容" multiLine :rows="1" :rowsMax="4"/>
             </div>
             <div class="btns">
-                <ui-raised-button class="btn" label="转换成小写" @click="lowercase"/>
-                <ui-raised-button class="btn" label="转换成大写" @click="uppercase"/>
+                <ui-raised-button class="btn" primary label="转换成大写" @click="uppercase"/>
+                <ui-raised-button class="btn" secondary label="转换成小写" @click="lowercase"/>
                 <ui-raised-button class="btn" label="首字母大写" @click="capitalize"/>
                 <ui-raised-button class="btn" label="清空内容" @click="clear"/>
             </div>
@@ -35,21 +35,30 @@
             },
             lowercase: function () {
                 if (!this.text) {
-                    alert('请输入要转换的内容')
+                    this.$message({
+                        type: 'danger',
+                        text: '请输入要转换的内容'
+                    })
                     return
                 }
                 this.result = this.text.toLowerCase()
             },
             uppercase: function () {
                 if (!this.text) {
-                    alert('请输入要转换的内容')
+                    this.$message({
+                        type: 'danger',
+                        text: '请输入要转换的内容'
+                    })
                     return
                 }
                 this.result = this.text.toUpperCase()
             },
             capitalize: function () {
                 if (!this.text) {
-                    alert('请输入要转换的内容')
+                    this.$message({
+                        type: 'danger',
+                        text: '请输入要转换的内容'
+                    })
                     return
                 }
                 this.result = this._capitalize(this.text)

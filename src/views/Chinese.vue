@@ -11,7 +11,7 @@
             </div>
             <div class="btns">
                 <ui-raised-button class="btn" label="转成简体" primary @click="simplified" :disabled="text.length === 0"/>
-                <ui-raised-button class="btn" label="转成繁体" @click="traditional" :disabled="text.length === 0"/>
+                <ui-raised-button class="btn" label="转成繁体" secondary @click="traditional" :disabled="text.length === 0"/>
                 <ui-raised-button class="btn" label="重新输入" @click="clear"/>
             </div>
             <ui-text-field v-model="result" hintText="" multiLine :rows="4" :rowsMax="10" v-if="result"/>

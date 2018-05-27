@@ -5,8 +5,8 @@
                 <ui-text-field v-model="text" hintText="输入要转换的内容" multiLine :rows="1" :rowsMax="4"/>
             </div>
             <div class="btns">
-                <ui-raised-button class="btn" label="转换成全角" @click="toFull"/>
-                <ui-raised-button class="btn" label="转换成半角" @click="toHalf"/>
+                <ui-raised-button class="btn" primary label="转换成全角" @click="toFull"/>
+                <ui-raised-button class="btn" secondary label="转换成半角" @click="toHalf"/>
                 <ui-raised-button class="btn" label="清空内容" @click="clear"/>
             </div>
 
@@ -44,14 +44,20 @@
             },
             toHalf: function () {
                 if (!this.text) {
-                    alert('请输入要转换的内容')
+                    this.$message({
+                        type: 'danger',
+                        text: '请输入要转换的内容'
+                    })
                     return
                 }
                 this.result = this._toHalf(this.text)
             },
             toFull: function () {
                 if (!this.text) {
-                    alert('请输入要转换的内容')
+                    this.$message({
+                        type: 'danger',
+                        text: '请输入要转换的内容'
+                    })
                     return
                 }
                 this.result = this._toFull(this.text)

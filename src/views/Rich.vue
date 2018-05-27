@@ -147,8 +147,6 @@
             }
         },
         mounted() {
-            this.make()
-//            this.feedback()
         },
         methods: {
             make: function () {

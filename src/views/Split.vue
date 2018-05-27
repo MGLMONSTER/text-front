@@ -57,6 +57,13 @@
                 return ret
             },
             split() {
+                if (!this.text) {
+                    this.$message({
+                        type: 'danger',
+                        text: '请输入内容'
+                    })
+                    return
+                }
                 this.result = this._split(this.text)
             }
         }
