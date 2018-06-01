@@ -90,8 +90,8 @@
         }
     }
     .btns {
-        margin-bottom: 16px;
         .btn {
+            margin-bottom: 16px;
             margin-right: 16px;
         }
     }

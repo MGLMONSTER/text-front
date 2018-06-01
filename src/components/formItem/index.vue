@@ -1,9 +1,10 @@
 <template>
     <div class="form-item">
-        <div class="form-item-left">{{ label }}</div>
+        <slot></slot>
+        <!-- <div class="form-item-left">{{ label }}</div>
         <div class="form-item-right">
             <slot></slot>
-        </div>
+        </div> -->
     </div>
 </template>
 

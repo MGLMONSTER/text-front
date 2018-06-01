@@ -113,9 +113,9 @@
         }
     }
     .btns {
-        margin-bottom: 16px;
         .btn {
             margin-right: 16px;
+            margin-bottom: 16px;
         }
     }
 </style>

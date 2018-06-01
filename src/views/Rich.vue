@@ -3,7 +3,7 @@
         <my-rich-editor v-model="content"></my-rich-editor>
 
         <div class="tools">
-            <ui-raised-button label="生成图片" @click="make" primary/>
+            <ui-raised-button label="生成图片" @click="make2" primary/>
         </div>
         <div class="my-virtual-page" v-if="previewVisible">
             <ui-appbar title="图片外观设置">
@@ -16,50 +16,57 @@
                         <div id="capture" class="capture" v-html="content" :style="captureStyle"></div>
                     </div>
                     <div class="right">
-                        <h2 class="my-section-title">设置</h2>
-                        <my-form-item label="宽度">
-                            <ui-text-field v-model.number="style.width" />
-                        </my-form-item>
-                        <my-form-item label="高度">
-                            <ui-text-field v-model.number="style.height" />
-                        </my-form-item>
-                        <my-form-item label="顶部旁白">
-                            <!--<ui-slider v-model.number="style.paddingTop" fullWidth/>-->
-                            <ui-text-field v-model.number="style.paddingTop" />
-                        </my-form-item>
-                        <my-form-item label="左侧旁白">
-                            <ui-text-field v-model.number="style.paddingLeft" />
-                        </my-form-item>
-                        <my-form-item label="字体大小">
-                            <ui-text-field v-model.number="style.fontSize" />
-                        </my-form-item>
-                        <my-form-item label="字体">
-                            <ui-select-field v-model="style.fontFamily">
-                                <ui-menu-item value="微软雅黑" title="微软雅黑"/>
-                                <ui-menu-item value="宋体" title="宋体"/>
-                                <ui-menu-item value="楷体" title="楷体"/>
-                            </ui-select-field>
-                        </my-form-item>
-                        <my-form-item label="背景颜色">
-                            <ui-select-field v-model="style.backgroundColor">
-                                <ui-menu-item value="#fff" title="白色"/>
-                                <ui-menu-item value="#f1f1f1" title="浅灰"/>
-                            </ui-select-field>
-                        </my-form-item>
-                        <my-form-item label="背景图片">
-                            <ui-select-field v-model="style.background">
-                                <ui-menu-item value="none" title="无"/>
-                                <ui-menu-item value="url('/static/img/bg-1.jpg')" title="样式一"/>
-                                <ui-menu-item value="url('/static/img/bg-2.jpg')" title="样式二"/>
-                            </ui-select-field>
-                        </my-form-item>
-                        <ui-raised-button label="下载" @click="download" primary/>
+                        <ui-raised-button class="btn" label="下载" @click="download" primary/>
+                        <ui-raised-button label="设置" @click="toggleSetting" secondary/>
 
                         <canvas id="canvas" style="display: none;"></canvas>
                     </div>
                 </my-container>
             </div>
         </div>
+        <ui-drawer class="setting-box" :open="settingVisible" right :docked="true" @close="toggleSetting()">
+            <ui-appbar title="设置">
+                <ui-icon-button icon="close" @click="toggleSetting" slot="left" />
+            </ui-appbar>
+            <div class="body">
+                <form-item label="宽度">
+                    <ui-text-field v-model.number="style.width" type="number" label="宽度" />
+                </form-item>
+                <form-item label="高度">
+                    <ui-text-field v-model.number="style.height" type="number" label="高度" />
+                </form-item>
+                <form-item label="顶部旁白">
+                    <!--<ui-slider v-model.number="style.paddingTop" fullWidth/>-->
+                    <ui-text-field v-model.number="style.paddingTop" type="number" label="顶部旁白" />
+                </form-item>
+                <form-item label="左侧旁白">
+                    <ui-text-field v-model.number="style.paddingLeft" type="number" label="左侧旁白" />
+                </form-item>
+                <form-item label="字体大小">
+                    <ui-text-field v-model.number="style.fontSize" type="number" label="字体大小" />
+                </form-item>
+                <form-item label="字体">
+                    <ui-select-field v-model="style.fontFamily" label="字体">
+                        <ui-menu-item value="微软雅黑" title="微软雅黑"/>
+                        <ui-menu-item value="宋体" title="宋体"/>
+                        <ui-menu-item value="楷体" title="楷体"/>
+                    </ui-select-field>
+                </form-item>
+                <form-item label="背景颜色">
+                    <ui-select-field v-model="style.backgroundColor" label="背景颜色">
+                        <ui-menu-item value="#fff" title="白色"/>
+                        <ui-menu-item value="#f1f1f1" title="浅灰"/>
+                    </ui-select-field>
+                </form-item>
+                <form-item label="背景图片">
+                    <ui-select-field v-model="style.background" label="背景图片">
+                        <ui-menu-item value="none" title="无"/>
+                        <ui-menu-item value="url('/static/img/bg-1.jpg')" title="样式一"/>
+                        <ui-menu-item value="url('/static/img/bg-2.jpg')" title="样式二"/>
+                    </ui-select-field>
+                </form-item>
+            </div>
+        </ui-drawer>
         <div class="my-virtual-page" v-if="resultVisible">
             <ui-appbar title="下载">
                 <ui-icon-button icon="close" slot="left" @click="resultVisible = false"/>
@@ -113,6 +120,7 @@
                 result: '',
                 previewVisible: false,
                 resultVisible: false,
+                settingVisible: false,
                 style: {
                     width: 640,
                     height: 480,
@@ -149,7 +157,14 @@
         mounted() {
         },
         methods: {
-            make: function () {
+            toggleSetting() {
+                this.settingVisible = !this.settingVisible
+            },
+            make2() {
+                this.settingVisible = true
+                this.make()
+            },
+            make() {
                 this.previewVisible = true
                 setTimeout(() => {
                     html2canvas(document.querySelector('#capture')).then(canvas => {
@@ -218,6 +233,9 @@
             }
             .right {
                 float: left;
+                .btn {
+                    margin-right: 8px;
+                }
             }
         }
     }
@@ -230,6 +248,20 @@
     }
     .tools {
         margin-top: 16px;
+    }
+    .setting-box {
+        width: 100%;
+        max-width: 400px;
+        z-index: 1000000;
+        .body {
+            position: absolute;
+            top: 64px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 16px;
+            overflow: auto;
+        }
     }
 
 </style>
