@@ -12,6 +12,8 @@ const Letter = resolve => require(['@/views/Letter'], resolve)
 const FullAndHalf = resolve => require(['@/views/FullAndHalf'], resolve)
 const FullAndHalfHelp = resolve => require(['@/views/FullAndHalfHelp'], resolve)
 const Split = resolve => require(['@/views/Split'], resolve)
+// chinesevertical
+const Column = resolve => require(['@/views/Column'], resolve)
 const SplitHelp = resolve => require(['@/views/SplitHelp'], resolve)
 
 const Error404 = resolve => require(['@/views/error/Error404'], resolve)
@@ -66,6 +68,10 @@ let routes = [
     {
         path: '/fullAndHalf/help',
         component: FullAndHalfHelp
+    },
+    {
+        path: '/text/column',
+        component: Column
     },
     {
         path: '*',
