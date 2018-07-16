@@ -1,13 +1,16 @@
 <template>
     <my-page title="富文本编辑器">
-        <my-rich-editor v-model="content"></my-rich-editor>
+        <my-rich-editor ref="editor" v-model="content"></my-rich-editor>
 
         <div class="tools">
-            <ui-raised-button label="生成图片" @click="make2" primary/>
+            <ui-raised-button class="btn" label="生成图片" @click="make2" primary/>
+            <ui-raised-button class="btn" label="选择内容" @click="toggleArticle" secondary/>
         </div>
         <div class="my-virtual-page" v-if="previewVisible">
             <ui-appbar title="图片外观设置">
                 <ui-icon-button icon="close" slot="left" @click="previewVisible = false"/>
+                <ui-icon-button icon="file_download" slot="right" @click="download" tooltip="下载"/>
+                <ui-icon-button icon="settings" slot="right" @click="toggleSetting" tooltip="修改样式"/>
             </ui-appbar>
             <div class="page-content">
                 <my-container class="preview-box-container" :maxWidth="1200">
@@ -16,8 +19,8 @@
                         <div id="capture" class="capture" v-html="content" :style="captureStyle"></div>
                     </div>
                     <div class="right">
-                        <ui-raised-button class="btn" label="下载" @click="download" primary/>
-                        <ui-raised-button label="设置" @click="toggleSetting" secondary/>
+                        <!-- <ui-raised-button class="btn" label="下载" @click="download" primary/> -->
+                        <!-- <ui-raised-button label="设置" @click="toggleSetting" secondary/> -->
 
                         <canvas id="canvas" style="display: none;"></canvas>
                     </div>
@@ -58,13 +61,19 @@
                         <ui-menu-item value="#f1f1f1" title="浅灰"/>
                     </ui-select-field>
                 </form-item>
-                <form-item label="背景图片">
+                <!-- <form-item label="背景图片">
                     <ui-select-field v-model="style.background" label="背景图片">
                         <ui-menu-item value="none" title="无"/>
                         <ui-menu-item value="url('/static/img/bg-1.jpg')" title="样式一"/>
                         <ui-menu-item value="url('/static/img/bg-2.jpg')" title="样式二"/>
                     </ui-select-field>
-                </form-item>
+                </form-item> -->
+                <div class="btns">
+                    <ui-raised-button class="btn" label="选择背景图片" primary @click="backgroundVisible = true" />
+                    <ui-raised-button class="btn file-select-btn" label="上传背景图片" secondary>
+                        <input type="file" class="ui-file-button" accept="image/*" @change="fileChange($event)">
+                    </ui-raised-button>
+                </div>
             </div>
         </ui-drawer>
         <div class="my-virtual-page" v-if="resultVisible">
@@ -98,6 +107,30 @@
             </div>
         </div>
         <ui-float-button icon="feedback" class="my-float-button" title="意见反馈" @click="feedback"/>
+        <ui-drawer class="article-drawer" right :open="articleVisible" @close="toggleArticle()">
+            <ui-appbar title="内容">
+                <ui-icon-button icon="close" @click="articleVisible = false" slot="left" />
+            </ui-appbar>
+            <!-- <ul class="article">
+                <li class="item"></li>
+            </ul> -->
+            <ui-list>
+                <ui-list-item title="木兰花 · 拟古决绝词柬友" @click="setContent(0)" />
+                <ui-list-item title="鹊桥仙 · 纤云弄巧" @click="setContent(1)"/>
+            </ui-list>
+        </ui-drawer>
+        <ui-drawer class="bg-drawer" right :open="backgroundVisible" @close="toggleBackground()">
+            <ui-appbar title="背景图片">
+                <ui-icon-button icon="close" @click="backgroundVisible = false" slot="left" />
+            </ui-appbar>
+            <div class="body">
+                <ul class="bg-list">
+                    <li class="item" v-for="img in images" @click="setBg(img)">
+                        <img class="img" :src="img" />
+                    </li>
+                </ul>
+            </div>
+        </ui-drawer>
     </my-page>
 </template>
 
@@ -109,7 +142,9 @@
     export default {
         data () {
             return {
-                content: `<h2>木兰词·拟古决绝词柬友</h2>
+                content: ``,
+                contents: [
+                    `<h2>木兰花·拟古决绝词柬友</h2>
 <p>【作者】纳兰性德</p>
 <p>【朝代】清</p>
 <p>人生若只如初见，何事秋风悲画扇。</p>
@@ -117,10 +152,22 @@
 <p>骊山语罢清宵半，泪雨零铃终不怨。</p>
 <p>何如薄幸锦衣郎，比翼连枝当日愿。</p>
 <p style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 云设 赠</p>`,
+                    `<h2>鹊桥仙·纤云弄巧</h2>
+<p>【作者】秦观</p>
+<p>【朝代】宋</p>
+<p>纤云弄巧，飞星传恨，银汉迢迢暗度。</p>
+<p>金风玉露一相逢，便胜却、人间无数。</p>
+<p>柔情似水，佳期如梦，忍顾鹊桥归路。</p>
+<p>两情若是久长时，又岂在、朝朝暮暮。</p>
+<p style="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 云设 赠</p>`,
+                    `鹊桥仙·纤云弄巧`
+                ],
                 result: '',
                 previewVisible: false,
                 resultVisible: false,
                 settingVisible: false,
+                articleVisible: false,
+                backgroundVisible: false,
                 style: {
                     width: 640,
                     height: 480,
@@ -132,6 +179,11 @@
                     backgroundColor: '#fff',
                     fontSize: 14
                 },
+                images: [
+                    '/static/img/bg-1.jpg',
+                    '/static/img/bg-2.jpg',
+                    '/static/img/bg_3.png'
+                ],
                 // 反馈
                 feedbackVisible: false,
                 pageCapture: ''
@@ -155,8 +207,41 @@
             }
         },
         mounted() {
+            this.setContent(0)
         },
         methods: {
+            setBg(img) {
+                console.log('设置背景')
+                this.style.background = `url('${img}')`
+            },
+            toggleBackground() {
+                this.backgroundVisible = !this.backgroundVisible
+            },
+            fileChange(event) {
+                let files = event.target.files
+                if (!files.length) {
+                    alert('请选择图片')
+                    return
+                }
+
+                let file = files[0]
+                if (!/image\/\w+/.test(file.type)) {
+                    alert('请上传正确格式的图片文件')
+                    return
+                }
+                let reader = new FileReader()
+                reader.onload = e => {
+                    this.style.background = `url('${e.target.result}')`
+                }
+                reader.readAsDataURL(file)
+            },
+            setContent(index) {
+                this.content = this.contents[index]
+                this.$refs.editor.setValue(this.content)
+            },
+            toggleArticle() {
+                this.articleVisible = !this.articleVisible
+            },
             toggleSetting() {
                 this.settingVisible = !this.settingVisible
             },
@@ -248,6 +333,9 @@
     }
     .tools {
         margin-top: 16px;
+        .btn {
+            margin-right: 8px;
+        }
     }
     .setting-box {
         width: 100%;
@@ -263,5 +351,40 @@
             overflow: auto;
         }
     }
-
+    .article-drawer {
+        z-index: 100000;
+    }
+    .bg-drawer {
+        width: 100%;
+        max-width: 400px;
+        z-index: 100000000;
+        .body {
+            position: absolute;
+            top: 64px;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            padding: 16px;
+            overflow: auto;
+        }
+        .bg-list {
+            .item {
+                cursor: pointer;
+                border: 1px solid rgba(0,0,0,.12);
+                margin-bottom: 16px;
+                &:hover {
+                    border: 1px solid #999;
+                }
+            }
+            .img {
+                display: block;
+                width: 100%;
+            }
+        }
+    }
+    .btns {
+        .btn {
+            margin-right: 8px;
+        }
+    }
 </style>

@@ -34,6 +34,9 @@
 //            this.editor.destroy()
         },
         methods: {
+            setValue(html) {
+                this.editor.txt.html(html)
+            }
         }
     }
 </script>
