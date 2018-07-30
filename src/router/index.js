@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 const Home = resolve => require(['@/views/Home'], resolve)
-const Editor = resolve => require(['@/views/Home'], resolve)
+const Editor = resolve => require(['@/views/Editor'], resolve)
 const Rich = resolve => require(['@/views/Rich'], resolve)
 const Tool = resolve => require(['@/views/Tool'], resolve)
 const About = resolve => require(['@/views/About'], resolve)
@@ -15,7 +15,14 @@ const Split = resolve => require(['@/views/Split'], resolve)
 // chinesevertical
 const Column = resolve => require(['@/views/Column'], resolve)
 const SplitHelp = resolve => require(['@/views/SplitHelp'], resolve)
-
+const Blank = resolve => require(['@/views/Blank'], resolve)
+const BlankHelp = resolve => require(['@/views/BlankHelp'], resolve)
+const PasswordCheck = resolve => require(['@/views/PasswordCheck'], resolve)
+const Chinese2Number = resolve => require(['@/views/Chinese2Number'], resolve)
+const LineText = resolve => require(['@/views/LineText'], resolve)
+const Reverse = resolve => require(['@/views/Reverse'], resolve)
+const Ant = resolve => require(['@/views/Ant'], resolve)
+const AntHelp = resolve => require(['@/views/AntHelp'], resolve)
 const Error404 = resolve => require(['@/views/error/Error404'], resolve)
 
 Vue.use(Router)
@@ -72,6 +79,38 @@ let routes = [
     {
         path: '/text/column',
         component: Column
+    },
+    {
+        path: '/blank',
+        component: Blank
+    },
+    {
+        path: '/blank/help',
+        component: BlankHelp
+    },
+    {
+        path: '/password_check',
+        component: PasswordCheck
+    },
+    {
+        path: '/chinese_to_number',
+        component: Chinese2Number
+    },
+    {
+        path: '/line_text',
+        component: LineText
+    },
+    {
+        path: '/reverse',
+        component: Reverse
+    },
+    {
+        path: '/ant',
+        component: Ant
+    },
+    {
+        path: '/ant/help',
+        component: AntHelp
     },
     {
         path: '*',

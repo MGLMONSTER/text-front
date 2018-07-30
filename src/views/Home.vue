@@ -1,162 +1,210 @@
 <template>
-    <my-page class="page-editor" title="文本编辑器" :page="page">
-        <!--代码输入框（注意请务必设置高度，否则无法显示）-->
-            <pre id="code" class="ace_editor" style="height100%; min-height:500px"><textarea class="ace_text-input">
-## 二级标题
-> 引用
-
-这是内容
-### 三级标题
-**加粗**文字
-        </textarea></pre>
+    <my-page title="文本工具">
+        <div class="tool-list">
+            <div class="mu-paper list-item mu-paper-round mu-paper-1" 
+                v-for="app in apps">
+                <router-link class="link" :to="app.to">
+                    <img :src="app.icon" class="img">
+                    <div class="info">
+                        <h3 class="text">{{ app.name }}</h3>
+                        <div class="desc">{{ app.desc }}</div>
+                    </div>
+                    <i class="icon icon-heart"></i>
+                </router-link>
+            </div>
+        </div>
     </my-page>
 </template>
 
 <script>
-//    const $ = window.$
-    const ace = window.ace
-    const Intent = window.Intent
-//    const saveAs = window.saveAs
-
     export default {
         data () {
             return {
-                page: {
-                    menu: [
-                        {
-                            type: 'icon',
-                            icon: 'all_inclusive',
-                            click: this.open,
-                            title: '用其他应用打开'
-                        }
-                    ]
-                }
+                apps: [
+                    {
+                        name: '文本编辑器',
+                        desc: '',
+                        icon: '/static/img/text_edit.svg',
+                        to: '/editor'
+                    },
+                    {
+                        name: '富文本编辑器',
+                        desc: '',
+                        icon: '/static/img/text_edit.svg',
+                        to: '/rich'
+                    },
+                    {
+                        name: '繁体字工具',
+                        desc: '',
+                        icon: '/static/img/simple_chinese.svg',
+                        to: '/chinese'
+                    },
+                    {
+                        name: '文本处理',
+                        desc: '',
+                        icon: '/static/img/text_edit.svg',
+                        to: '/tool'
+                    },
+                    {
+                        name: '大小写转换',
+                        desc: '',
+                        icon: '/static/img/letter_convert.svg',
+                        to: '/letter'
+                    },
+                    {
+                        name: '全角半角转换',
+                        desc: '',
+                        icon: '/static/img/full_half.svg',
+                        to: '/fullAndHalf'
+                    },
+                    {
+                        name: '拆字',
+                        desc: '',
+                        icon: '/static/img/text_split.svg',
+                        to: '/split'
+                    },
+                    {
+                        name: '文字竖排',
+                        desc: '',
+                        icon: '/static/img/text_col.svg',
+                        to: '/text/column'
+                    },
+                    {
+                        name: '文章加空格',
+                        desc: '',
+                        icon: '/static/img/text_edit.svg',
+                        to: '/blank'
+                    },
+                    {
+                        name: '密码强度检测',
+                        desc: '',
+                        icon: '/static/img/build.svg',
+                        to: '/password_check'
+                    },
+                    {
+                        name: '中文数字转数字',
+                        desc: '',
+                        icon: '/static/img/build.svg',
+                        to: '/chinese_to_number'
+                    },
+                    {
+                        name: '线条文字',
+                        desc: '',
+                        icon: '/static/img/build.svg',
+                        to: '/line_text'
+                    },
+                    {
+                        name: '文本翻转',
+                        desc: '',
+                        icon: '/static/img/build.svg',
+                        to: '/reverse'
+                    },
+                    {
+                        name: '蚂蚁文产生器',
+                        desc: '',
+                        icon: '/static/img/build.svg',
+                        to: '/ant'
+                    }
+                ]
             }
         },
+        computed: {
+        },
         mounted() {
-            this.init()
         },
         methods: {
             init() {
-                // 初始化对象
-                let editor = ace.edit('code')
-                this.editor = editor
-
-                // 设置风格和语言（更多风格和语言，请到github上相应目录查看）
-                let theme = 'clouds'
-                let language = 'markdown'
-                editor.setTheme('ace/theme/' + theme)
-                editor.session.setMode('ace/mode/' + language)
-
-                // 字体大小
-                editor.setFontSize(18)
-
-                // 设置只读（true时只读，用于展示代码）
-                editor.setReadOnly(false)
-
-                // 自动换行,设置为off关闭
-                editor.setOption('wrap', 'free')
-
-                // 启用提示菜单
-                ace.require('ace/ext/language_tools')
-                editor.setOptions({
-                    enableBasicAutocompletion: true,
-                    enableSnippets: true,
-                    enableLiveAutocompletion: true
-                })
-
-                editor.getSession().setUseSoftTabs(true)
-
-                editor.find('标题', {
-                    backwards: false,
-                    wrap: false,
-                    caseSensitive: false,
-                    wholeWord: false,
-                    regExp: false
-                })
-
-                console.log(editor)
-                this.initWebIntents()
-
-//                $('#new').on('click', function () {
-//                    editor.setValue('')
-//                })
-//
-//                $('#open').on('click', function () {
-//                    $('#file').click()
-//                })
-//
-//                $('#download').on('click', function () {
-//                    var blob = new Blob([editor.getValue()], {type: "text/plain;charset=utf-8"})
-//                    saveAs(blob, 'yunser.com-' + new Date().getTime() + '.txt')
-//                })
-//
-//                $('#save').on('click', function () {
-//                    var blob = new Blob([editor.getValue()], {type: "text/plain;charset=utf-8"})
-//                    saveAs(blob, 'yunser.com-' + new Date().getTime() + '.txt')
-//                })
-//
-//                $('#file').on('change', function (e) {
-//                    e.preventDefault()
-//
-//                    var files = [].slice.call(e.originalEvent.target.files)
-//                    var file = files[0]
-//
-//                    var reader = new FileReader()
-//                    reader.onload = (function(theFile) {
-//                        return function(e) {
-//                            var doc = e.target.result
-//
-//                            editor.setValue(doc)
-//                        }
-//                    })(file)
-//                    reader.readAsText(file)
-//                    $('#file').click()
-//                })
             },
-            initWebIntents() {
-                if (!window.intent) {
-                    return
-                }
-                console.log(window.intent.data)
-                let data = window.intent.data
-                this.editor.setValue(data)
-
-                this.page.menu.push({
-                    type: 'icon',
-                    icon: 'check',
-                    click: this.finish,
-                    title: '完成'
-                })
+            fileChange(e) {
             },
-            open() {
-                let intent = new Intent({
-                    action: 'http://webintent.yunser.com/?',
-                    type: 'text/plain',
-                    data: this.editor.getValue()
-                })
-                navigator.startActivity(intent, data => {
-                    console.log('成功', typeof data)
-                    this.editor.setValue(data)
-                }, data => {
-                    console.log('失败')
-                })
-            },
-            finish() {
-                window.intent.postResult(this.editor.getValue())
-                setTimeout(() => {
-                    let owner = window.opener || window.parent
-                    owner.window.close()
-                }, 100)
+            sizeStr: function (size) {
             }
         }
     }
 </script>
 
-<style scoped>
-    .ace-editor {
-        height: 100%;
-        min-height: 500px;
-        font-size: 18px
+<style lang="scss" scoped>
+@import '../scss/var';
+
+.tool-list {
+    max-width: 840px;
+    margin: 0 auto;
+    @include clearfix;
+    .list-item {
+        position: relative;
+        float: left;
+        width: 260px;
+        height: 96px;
+        padding: 8px;
+        margin: 2px 16px 16px 2px;
+        background-color: #fff;
+        //border: 1px solid #ccc;
+        &:hover {
+            background-color: #f9f9f9;
+            // box-shadow: 0 3px 10px rgba(0,0,0,.156863), 0 3px 10px rgba(0,0,0,.227451);
+            //border-color: #09c;
+            .icon {
+                display: block;
+            }
+        }
+        &.active {
+            border: 1px solid #f00;
+        }
     }
+    a {
+        display: block;
+        height: 100%;
+        color: #666;
+        cursor: pointer;
+    }
+    .img {
+        float: left;
+        width: 72px;
+        height: 72px;
+        margin-right: 16px;
+        background-color: #fff;
+        border: 1px solid #e9e9e9;
+        border-radius: 8px;
+    }
+    .info {
+        float: left;
+    }
+    .text {
+        font-size: 18px;
+        color: #000;
+    }
+    .header {
+        overflow: hidden;
+    }
+    .desc {
+        max-width: 150px;
+        margin-top: 8px;
+    }
+    .icon-heart {
+        display: none;
+        position: absolute;
+        top: 8px;
+        right: 8px;
+        &:hover {
+            color: #f00;
+        }
+    }
+    .icon-close {
+        display: none;
+        position: absolute;
+        top: 32px;
+        right: 8px;
+        &:hover {
+            color: #f00;
+        }
+    }
+}
+@media all and (max-width: 400px){
+    .tool-list {
+        .list-item {
+            width: 100%;
+            margin-right: 0;
+        }
+    }
+}
 </style>
