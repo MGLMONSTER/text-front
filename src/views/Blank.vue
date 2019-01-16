@@ -4,7 +4,9 @@
         <div class="btns">
             <ui-raised-button class="btn" primary label="处理" @click="calculate" />
         </div>
-        <textarea class="form-control" v-model="result" rows="6" placeholder="结果" disabled v-if="result"></textarea>
+        <div v-if="result">
+            <result :text="result" :copyable="true" />
+        </div>
     </my-page>
 </template>
 
@@ -22,7 +24,9 @@
                         {
                             type: 'icon',
                             icon: 'help',
-                            to: '/blank/help'
+                            href: 'https://project.yunser.com/products/c807c7400db711e99f2863e9d9681573',
+                            target: '_blank',
+                            title: '帮助'
                         }
                     ]
                 }

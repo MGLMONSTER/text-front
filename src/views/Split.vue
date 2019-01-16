@@ -5,9 +5,9 @@
             <div class="btns">
                 <ui-raised-button class="btn" label="拆字" primary @click="split" />
             </div>
-            <ui-paper class="result" v-if="result">
-                {{ result }}
-            </ui-paper>
+            <div v-if="result">
+                <result :text="result" :copyable="true" />
+            </div>
         </div>
     </my-page>
 </template>
@@ -23,7 +23,9 @@
                         {
                             type: 'icon',
                             icon: 'help',
-                            to: '/split/help'
+                            href: 'https://project.yunser.com/products/34686f80616911e89cbc311ca74b260f',
+                            target: '_blank',
+                            title: '帮助'
                         }
                     ]
                 }

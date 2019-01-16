@@ -1,5 +1,5 @@
 <template>
-    <my-page title="繁体字工具" :page="page">
+    <my-page title="繁体字" :page="page">
         <section class="input-box">
             <div class="tip"><h1></h1></div>
             <ui-text-field v-model="text" hintText="输入要转换的内容" multiLine :rows="4" :rowsMax="10"/>
@@ -14,7 +14,9 @@
                 <ui-raised-button class="btn" label="转成繁体" secondary @click="traditional" :disabled="text.length === 0"/>
                 <ui-raised-button class="btn" label="重新输入" @click="clear"/>
             </div>
-            <ui-text-field v-model="result" hintText="" multiLine :rows="4" :rowsMax="10" v-if="result"/>
+            <div class="result-box" v-if="result">
+                <result :text="result" :copyable="true" />
+            </div>
             <div>
                 <a class="advanced" href="#" @click.prevent="toggleAdvanced">高级</a>
             </div>
@@ -43,7 +45,9 @@
                         {
                             type: 'icon',
                             icon: 'help',
-                            to: '/chinese/help'
+                            href: 'https://project.yunser.com/products/4853e1b0616811e89cbc311ca74b260f',
+                            target: '_blank',
+                            title: '帮助'
                         }
                     ]
                 },
@@ -153,5 +157,8 @@
         display: inline-block;
         margin-bottom: 16px;
         color: #999;
+    }
+    .result-box {
+        margin-bottom: 16px;
     }
 </style>

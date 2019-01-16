@@ -5,7 +5,7 @@
             <ui-raised-button class="btn" primary label="转换" @click="calculate" />
         </div>
         <div v-if="result">
-            {{ result }}
+            <result :text="result" :copyable="true" />
         </div>
     </my-page>
 </template>

@@ -2,9 +2,12 @@
     <my-page title="文本翻转" :page="page">
         <textarea class="form-control" v-model="code" rows="6" placeholder="文本"></textarea>
         <div class="btns">
-            <ui-raised-button class="btn" primary label="转换" @click="calculate" />
+            <ui-raised-button class="btn" primary label="翻转" @click="calculate" />
         </div>
-        <textarea class="form-control result-input" v-model="result" rows="6" placeholder="中文数字" v-if="result"></textarea>
+        <div v-if="result">
+            <result :text="result" :copyable="true" />
+        </div>
+        <!-- <textarea class="form-control result-input" v-model="result" rows="6" placeholder="中文数字" v-if="result"></textarea> -->
     </my-page>
 </template>
 

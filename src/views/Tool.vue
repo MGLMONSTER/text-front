@@ -11,6 +11,7 @@
                         <ui-raised-button class="btn" label="删除空行" @click="blank"/>
                         <ui-raised-button class="btn" label="删除多余空行" @click="blank2" title="连续空行只保留一行" />
                         <ui-raised-button class="btn" label="排序" @click="sort"/>
+                        <ui-raised-button class="btn" label="去空白符" @click="removeBlank"/>
                         <ui-raised-button class="btn" label="重新输入" @click="clear"/>
 					</div>
 				</section>
@@ -254,6 +255,9 @@
                 }
 
                 this.text = newArr.join('\n')
+            },
+            removeBlank() {
+                this.text = this.text.replace(/\s/g, '')
             },
             sort() {
                 if (!this.text) {

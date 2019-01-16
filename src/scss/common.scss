@@ -6,7 +6,9 @@ body,
 .ui-page-container {
     padding: 0;
 }
-
+.ui-page-body {
+    -webkit-overflow-scrolling : touch;
+}
 .page-editor {
     .ui-page-container {
         height: 100%;

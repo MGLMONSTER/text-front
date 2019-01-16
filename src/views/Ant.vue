@@ -1,10 +1,12 @@
 <template>
-    <my-page title="蚂蚁文产生器" :page="page">
+    <my-page title="蚂蚁文生成器" :page="page">
         <textarea class="form-control" v-model="code" rows="6" placeholder="文本"></textarea>
         <div class="btns">
             <ui-raised-button class="btn" primary label="转换" @click="calculate" />
         </div>
-        <textarea class="form-control result-input" v-model="result" rows="6" placeholder="中文数字" v-if="result"></textarea>
+        <div v-if="result">
+            <result :text="result" :copyable="true" />
+        </div>
     </my-page>
 </template>
 
@@ -19,7 +21,9 @@
                         {
                             type: 'icon',
                             icon: 'help',
-                            to: '/ant/help'
+                            href: 'https://project.yunser.com/products/cdf6bfe00db611e99f2863e9d9681573',
+                            target: '_blank',
+                            title: '帮助'
                         }
                     ]
                 }

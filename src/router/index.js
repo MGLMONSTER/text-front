@@ -5,24 +5,21 @@ const Home = resolve => require(['@/views/Home'], resolve)
 const Editor = resolve => require(['@/views/Editor'], resolve)
 const Rich = resolve => require(['@/views/Rich'], resolve)
 const Tool = resolve => require(['@/views/Tool'], resolve)
-const About = resolve => require(['@/views/About'], resolve)
 const Chinese = resolve => require(['@/views/Chinese'], resolve)
-const ChineseHelp = resolve => require(['@/views/ChineseHelp'], resolve)
 const Letter = resolve => require(['@/views/Letter'], resolve)
 const FullAndHalf = resolve => require(['@/views/FullAndHalf'], resolve)
-const FullAndHalfHelp = resolve => require(['@/views/FullAndHalfHelp'], resolve)
 const Split = resolve => require(['@/views/Split'], resolve)
+const WordCounter = resolve => require(['@/views/WordCounter'], resolve)
 // chinesevertical
 const Column = resolve => require(['@/views/Column'], resolve)
-const SplitHelp = resolve => require(['@/views/SplitHelp'], resolve)
 const Blank = resolve => require(['@/views/Blank'], resolve)
-const BlankHelp = resolve => require(['@/views/BlankHelp'], resolve)
 const PasswordCheck = resolve => require(['@/views/PasswordCheck'], resolve)
 const Chinese2Number = resolve => require(['@/views/Chinese2Number'], resolve)
 const LineText = resolve => require(['@/views/LineText'], resolve)
 const Reverse = resolve => require(['@/views/Reverse'], resolve)
 const Ant = resolve => require(['@/views/Ant'], resolve)
-const AntHelp = resolve => require(['@/views/AntHelp'], resolve)
+const Leetspeak = resolve => require(['@/views/Leetspeak'], resolve)
+const Text2Text = resolve => require(['@/views/Text2Text'], resolve)
 const Error404 = resolve => require(['@/views/error/Error404'], resolve)
 
 Vue.use(Router)
@@ -31,6 +28,10 @@ let routes = [
     {
         path: '/',
         component: Home
+    },
+    {
+        path: '/word_counter',
+        component: WordCounter
     },
     {
         path: '/editor',
@@ -45,16 +46,8 @@ let routes = [
         component: Tool
     },
     {
-        path: '/about',
-        component: About
-    },
-    {
         path: '/chinese',
         component: Chinese
-    },
-    {
-        path: '/chinese/help',
-        component: ChineseHelp
     },
     {
         path: '/letter',
@@ -65,16 +58,8 @@ let routes = [
         component: Split
     },
     {
-        path: '/split/help',
-        component: SplitHelp
-    },
-    {
         path: '/fullAndHalf',
         component: FullAndHalf
-    },
-    {
-        path: '/fullAndHalf/help',
-        component: FullAndHalfHelp
     },
     {
         path: '/text/column',
@@ -83,10 +68,6 @@ let routes = [
     {
         path: '/blank',
         component: Blank
-    },
-    {
-        path: '/blank/help',
-        component: BlankHelp
     },
     {
         path: '/password_check',
@@ -109,8 +90,12 @@ let routes = [
         component: Ant
     },
     {
-        path: '/ant/help',
-        component: AntHelp
+        path: '/leetspeak',
+        component: Leetspeak
+    },
+    {
+        path: '/text_to_text',
+        component: Text2Text
     },
     {
         path: '*',

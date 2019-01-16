@@ -9,8 +9,9 @@
                 <ui-raised-button class="btn" secondary label="转换成半角" @click="toHalf"/>
                 <ui-raised-button class="btn" label="清空内容" @click="clear"/>
             </div>
-
-            <ui-text-field v-model="result" hintText="" multiLine :rows="4" :rowsMax="10" v-if="result"/>
+            <div v-if="result">
+                <result :text="result" :copyable="true" />
+            </div>
         </section>
     </my-page>
 </template>
@@ -26,7 +27,9 @@
                         {
                             type: 'icon',
                             icon: 'help',
-                            to: '/fullAndHalf/help'
+                            href: 'https://project.yunser.com/products/ac3af1b0616711e89cbc311ca74b260f',
+                            target: '_blank',
+                            title: '帮助'
                         }
                     ]
                 }
@@ -114,7 +117,7 @@
     }
     .btns {
         .btn {
-            margin-right: 16px;
+            margin-right: 8px;
             margin-bottom: 16px;
         }
     }
